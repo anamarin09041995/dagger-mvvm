@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="tarea"
+            type="codemakers.daggermvvm.data.model.Tarea"/>
+        <variable
+            name="clear"
+            type="io.reactivex.subjects.Subject"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/small"
+            android:layout_marginLeft="@dimen/small"
+            android:layout_marginTop="@dimen/small"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/cardview_default_radius"
+            android:elevation="@dimen/small"
+
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/small"
+                    >
+
+                    <TextView
+                        android:id="@+id/nombre_tarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/small"
+                        android:layout_marginRight="@dimen/small"
+                        android:layout_marginTop="@dimen/small"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:text="@{tarea.name}"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        tools:text="Tarea 1"
+                        />
+
+                    <TextView
+                        android:id="@+id/fecha_tarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_marginLeft="@dimen/small"
+                        android:layout_marginRight="@dimen/small"
+                        android:layout_marginTop="@dimen/small"
+                        app:dateFormat="@{tarea.date}"
+                        tools:text ="30 de abril" />
+
+                    <TextView
+                        android:id="@+id/descripcion_tarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/small"
+                        android:layout_marginRight="@dimen/small"
+                        android:layout_marginTop="@dimen/small"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:text="@{tarea.description}"
+                        tools:text="Descripcion tarea 1"
+                        />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:layout_alignEnd="@+id/linear"
+                    android:layout_alignRight="@+id/linear"
+                    android:onClick="@{() -> clear.onNext(tarea)}"
+                    />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</layout>

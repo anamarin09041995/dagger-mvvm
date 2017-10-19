@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DaggerMVVM.iml" filepath="$PROJECT_DIR$/DaggerMVVM.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dagger-mvvm.iml" filepath="$PROJECT_DIR$/dagger-mvvm.iml" />
     </modules>
   </component>
 </project>
