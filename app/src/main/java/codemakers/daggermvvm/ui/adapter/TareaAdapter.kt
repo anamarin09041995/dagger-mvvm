@@ -31,6 +31,7 @@ class TareaAdapter: RecyclerView.Adapter<TareaAdapter.TodoHolder>() {
     override fun onBindViewHolder(holder: TodoHolder, position: Int) {
         holder.binding.tarea = data[position]
         holder.binding.clear = clearSubject
+        holder.binding.update = updateSubject
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoHolder

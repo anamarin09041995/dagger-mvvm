@@ -27,9 +27,6 @@ class AddActivity : AppCompatActivity() {
     @Inject
     lateinit var addViewModel: AddViewModel
 
-    @Inject
-    lateinit var tarea: Tarea
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

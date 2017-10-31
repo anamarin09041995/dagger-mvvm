@@ -5,16 +5,19 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import codemakers.daggermvvm.R
+import codemakers.daggermvvm.data.model.Tarea
 import codemakers.daggermvvm.databinding.ActivityMainBinding
 import codemakers.daggermvvm.ui.adapter.TareaAdapter
 import codemakers.daggermvvm.ui.add.AddActivity
+import codemakers.daggermvvm.ui.update.UpdateActivity
 import codemakers.daggermvvm.util.LifeDisposable
+import codemakers.daggermvvm.util.applySchedulers
+import codemakers.daggermvvm.util.snackBarAction
 import com.jakewharton.rxbinding2.view.clicks
 import dagger.android.AndroidInjection
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -35,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
 
-        recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
         supportActionBar?.setTitle("Tareas")
 
     }
@@ -44,16 +47,26 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
        dis add adapter.clearSubject
-                .flatMap { Observable.fromCallable { mainViewModel.dao::delete } }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { mainViewModel.dao::delete }
+               .flatMap { tarea ->  mainViewModel.eliminar(tarea).map { tarea } }
+               .flatMap { snackBarAction(contentView!!, R.string.snackBar, R.string.undo, it ) }
+               .flatMap { mainViewModel.deshacer(it as Tarea) }
+               .subscribe()
 
         dis add add.clicks()
                 .subscribe { startActivity<AddActivity>() }
 
+        dis add adapter.updateSubject
+                .applySchedulers()
+                .subscribeBy (onNext = {
+                    goToUpdate(it)
+                })
+
         dis add mainViewModel.getAllTodo()
                 .subscribe { adapter.data = it }
+    }
+
+    fun goToUpdate(tarea: Tarea){
+        startActivity<UpdateActivity>("params" to tarea)
     }
 
 }

@@ -7,10 +7,6 @@
 
     <data>
         <variable
-            name="update"
-            type="io.reactivex.subjects.Subject"/>
-
-        <variable
             name="tarea"
             type="codemakers.daggermvvm.data.model.Tarea"/>
     </data>
@@ -39,7 +35,7 @@
 
 
             <EditText
-                android:id="@+id/nombre"
+                android:id="@+id/descripcion_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/descripcion"
@@ -52,7 +48,6 @@
             android:layout_height="wrap_content"
             android:text="@string/save"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:onClick="@{() -> update.hasComplete(tarea.description)}"
             />
 
     </LinearLayout>
